@@ -1,0 +1,109 @@
+#include "stdint.h"
+#include "PCA9685.h"
+#include <iostream>
+#include <unistd.h>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+float pwmfrequenz = 50;
+
+
+int main( int argc, char **argv )
+{
+
+
+	cout << "marelab pwm test" << endl;
+	cout << "............................." << endl;
+
+
+    
+
+    int pwmchannel = 0;
+	int pwmvalue = 0;
+	int errparm = 0;
+	int pwmaddress = 0x41;
+
+	int c;
+	while ((c = getopt(argc, argv, "a:c:p:g:")) != -1) {
+		switch (c) {
+		case 'a': // set adress
+			if (optarg)
+				pwmaddress = std::atoi(optarg);
+			break;
+		case 'c': // set channel pwm
+			if (optarg)
+				pwmchannel = std::atoi(optarg);
+			break;
+		case 'p': // set pwm of channel
+			if (optarg)
+				pwmvalue = std::atoi(optarg);
+			break;
+		case 'g': // get pwm of channel
+			if (optarg)
+				pwmchannel = std::atoi(optarg);
+			break;
+		default:
+			errparm = 1;
+			break;
+		}
+	}
+
+	if (errparm == 1) {
+		std::cout << "call :" << endl;
+		std::cout << "   PWM-C -a <i2c adress>"<< '\n';
+		std::cout << "         -c <channel 0..15> set channel" << '\n';
+		std::cout << "         -p <pwm 0..4095> set pwm" << '\n';
+		std::cout << "         -g <channel 0..15>get pwm of channel" << '\n';
+	} else {
+		std::cout << "freq    : " << pwmfrequenz << '\n';
+		std::cout << "adress  : " << pwmaddress << '\n';
+		std::cout << "channel : " << pwmchannel << '\n';
+		std::cout << "pwmvalue: " << pwmvalue << '\n';
+		//PCA9685 pwm(pwmaddress);
+		PCA9685 pwm(65);
+		pwm.reset();
+		//pwm.initialize();
+		//if (pwm.testConnection())
+		{
+		pwm.setPWMFreq(pwmfrequenz)	;
+		//pwm.setFrequency(pwmfrequenz);
+		pwm.setPWM(pwmchannel,pwmvalue);
+		}
+		else
+		{
+			std::cout << "can't connect.." << '\n';
+		}
+	}
+
+
+/*
+
+    uint16_t R = 0, G = 0, B = 4095;
+
+    pwm.setPWM(0, R);
+    pwm.setPWM(1, G);
+    pwm.setPWM(2, B);
+
+    while (true) {
+        for (R = 0; R < 4095; R++)
+            pwm.setPWM(0, R);
+
+        for (B = 4095; B > 0; B--)
+            pwm.setPWM(2, B);
+
+        for (G = 0; G < 4095; G++)
+            pwm.setPWM(1, G);
+
+        for (R = 4095; R > 0; R--)
+            pwm.setPWM(0, R);
+
+        for (B = 0; B < 4095; B++)
+            pwm.setPWM(2, B);
+
+        for (G = 4095; G > 0; G--)
+            pwm.setPWM(1, G);
+    }
+*/
+    return 0;
+}

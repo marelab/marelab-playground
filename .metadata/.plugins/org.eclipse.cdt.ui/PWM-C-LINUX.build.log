@@ -1,0 +1,13 @@
+16:49:07 **** Rebuild of configuration Debug for project PWM-C-LINUX ****
+Info: Internal Builder is used for build
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -o PCA9685.o ../PCA9685.cpp 
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -o main.o ../main.cpp 
+../main.cpp: In function ‘int main(int, char**)’:
+../main.cpp:26:6: warning: variable ‘pwmdelay’ set but not used [-Wunused-but-set-variable]
+  int pwmdelay = -1;
+      ^
+g++ -std=c++0x -O0 -g3 -Wall -c -fmessage-length=0 -o I2Cdev.o ../I2Cdev.cpp 
+g++ -o PWM-C-LINUX main.o PCA9685.o I2Cdev.o 
+
+16:49:23 Build Finished (took 16s.51ms)
+

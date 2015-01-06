@@ -1,0 +1,77 @@
+#include "stdint.h"
+//#include "PCA9685.h"
+#include <iostream>
+#include <unistd.h>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+
+int main( int argc, char **argv )
+{
+
+
+	cout << "marelab pwm test" << endl;
+	cout << "............................." << endl;
+
+
+    //PCA9685 pwm;
+    
+    //pwm.initialize();
+
+	const char* nvalue = "World";
+    int pwmchannel = 0;
+	int pwmvalue = 0;
+	int tvalue = 1 ;
+
+	int c;
+	while ((c = getopt(argc, argv, "c:p:")) != -1) {
+		switch (c) {
+		case 'c':
+			if (optarg)
+				pwmchannel = std::atoi(optarg);
+			break;
+		case 'p':
+			if (optarg)
+				pwmvalue = std::atoi(optarg);
+			break;
+		 default:
+			  std::cout << "call PWM-C -c <channel 0..15> -p <pwm 0..4095>"<<'\n';
+		      break;
+
+		}
+	}
+
+	std::cout << "channel : " << pwmchannel <<'\n';
+	std::cout << "pwmvalue: " << pwmvalue <<'\n';
+
+/*
+
+    uint16_t R = 0, G = 0, B = 4095;
+
+    pwm.setPWM(0, R);
+    pwm.setPWM(1, G);
+    pwm.setPWM(2, B);
+
+    while (true) {
+        for (R = 0; R < 4095; R++)
+            pwm.setPWM(0, R);
+
+        for (B = 4095; B > 0; B--)
+            pwm.setPWM(2, B);
+
+        for (G = 0; G < 4095; G++)
+            pwm.setPWM(1, G);
+
+        for (R = 4095; R > 0; R--)
+            pwm.setPWM(0, R);
+
+        for (B = 0; B < 4095; B++)
+            pwm.setPWM(2, B);
+
+        for (G = 4095; G > 0; G--)
+            pwm.setPWM(1, G);
+    }
+*/
+    return 0;
+}
